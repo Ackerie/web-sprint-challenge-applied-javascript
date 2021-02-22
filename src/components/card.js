@@ -1,3 +1,6 @@
+import axios from "axios"
+
+
 const Card = (article) => {
   // TASK 5
   // ---------------------
@@ -16,8 +19,40 @@ const Card = (article) => {
   //     <span>By { authorName }</span>
   //   </div>
   // </div>
-  //
+  const newDiv = document.querySelector('div'),
+        newDiv1 = document.querySelector('div'),
+        newDiv2 = document.querySelector('div'),
+        newDiv3 = document.querySelector('div'),
+        newImg = document.querySelector('img'),
+        newSpan = document.querySelector('span')
+        
+        newDiv.appendChild(newDiv1)
+        newDiv.appendChild(newDiv2)
+        newDiv2.appendChild(newDiv3)
+        newDiv2.appendChild(newSpan)
+        newDiv3.appendChild(newImg)
+        
+        
+
+        newDiv.classList.add('card')
+        newDiv1.classList.add('headline')
+        newDiv2.classList.add('author')
+        newDiv3.classList.add('img-container')
+
+        newDiv.textContent = article.headline
+        newImg.setAttribute('src', `${article.authorPhoto}`) 
+        newSpan.textContent =`${article.authorName}`
+
+newDiv.addEventListener('click', (e) => { 
+        console.log(e)
+
+})
+
+       return newDiv
+        
 }
+// console.log(Card()) 
+
 
 const cardAppender = (selector) => {
   // TASK 6
@@ -27,7 +62,33 @@ const cardAppender = (selector) => {
   // However, the articles do not come organized in a single, neat array. Inspect the response closely!
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
-  //
+  
+//   const acard = Card('data')
+//   let newCard = document.querySelector(selector)
+//   newCard.append(acard)
+
+
+
+  
+ 
+    
+
+
+const Array = ["javascript", "bootstrap", "technology", "jquery","node"]
+Array.forEach(() => {
+  axios.get('https://lambda-times-api.herokuapp.com/articles')
+.then(response => {
+
+    const card = document.querySelector(selector)
+    let newCard = Card(response.body.articles)
+       newCard.appendChild(card)
+
+  })
+    .catch((err) =>{
+  err, 'opps somethings not right'
+})})
+    
 }
+
 
 export { Card, cardAppender }
